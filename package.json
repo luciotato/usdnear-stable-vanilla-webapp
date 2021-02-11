@@ -1,0 +1,27 @@
+{
+  "name": "usdnear-stable-vanilla-webapp",
+  "version": "1.0.0",
+  "description": "vanilla mvp web app for the usdnear-stable contract",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "build-release": "rm -rf Dapp/dist && tsc --build -verbose tsconfig-release.json",
+    "start": "npm run build && google-chrome-stable http://localhost:8010/DApp & python3 -m http.server 8010"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luciotato/usdnear-stable-vanilla-webapp.git"
+  },
+  "keywords": [
+    "NEAR",
+    "stablecoin",
+    "usdnear",
+    "narwallets"
+  ],
+  "author": "Lucio Tato <luciotato@gmail.com> (https://github.com/luciotato)",
+  "license": "GPL-v3",
+  "bugs": {
+    "url": "https://github.com/luciotato/usdnear-stable-vanilla-webapp/issues"
+  },
+  "homepage": "https://github.com/luciotato/usdnear-stable-vanilla-webapp#readme"
+}

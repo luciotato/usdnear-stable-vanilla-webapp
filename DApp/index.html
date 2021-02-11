@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>USDNEAR Stablecoin</title>
+    <link rel="stylesheet" href="css/hamb.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div class="app">
+
+        <div class="app-header">
+
+            <div class="app-header-contents">
+                <h2>USDNEAR Stablecoin</h2>
+                <span id="connection-info" class="info-div">Not Connected</span>
+            </div>
+        </div>
+
+        <div class="app-contents">
+
+            <!-- Main Page, Dashboard -->
+            <div id="initial-page" class="page slide-hide hidden">
+                <h2 class="page-header">Welcome!</h2>
+
+                <h3>Please connect a wallet to interact with this DApp</h3>
+
+                <div id="main-buttons" class="footer button-group">
+                    <button id="how-to-connect-a-wallet" class="button btn-primary">
+                        How to connect a wallet
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboard-page" class="page slide-hide hidden">
+                <h2 class="page-header">Dashboard</h2>
+
+                <div id="dashboard">
+                </div>
+
+                <div id="dashboard-buttons" class="footer button-group">
+                    <button id="refresh-dashboard" class="button btn-primary">
+                        Refresh Dashboard
+                    </button>
+                    <button id="enter-my-account" class="button btn-primary">
+                        My Account
+                    </button>
+                </div>
+
+                <!-- Dashboard Template -->
+                <div id="dashboard-template" class="hidden label-value-content">
+                    <div class="label-value">
+                        <label>Location</label>
+                        <div>{location}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Total USDNEAR</label>
+                        <div class="balance">{total_usdnear}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Total Collateral stNEAR</label>
+                        <div class="balance">{total_collateral_stnear}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>stNEAR price</label>
+                        <div class="balance">{current_stnear_price}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Valued Collateral</label>
+                        <div class="balance">{valued_collateral}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Total USDNEAR accounts</label>
+                        <div class="number">{balances_count}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Total borrowing accounts</label>
+                        <div class="number">{b_accounts_count}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>USDNEAR Loan APR</label>
+                        <div class="pct">{loan_apr}</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- My Account Page -->
+            <div id="my-account" class="account-selected page slide-hide hidden">
+                <header class="back-link">Back to Dashboard</header>
+                <div id="my-account-info" class="my-account-info">
+                </div>
+
+                <!-- Template -->
+                <div id="my-account-template" class="label-value-content hidden">
+                    <div class="label-value">
+                        <label>Account</label>
+                        <div class="account">{nearAccount}</div>
+                    </div>
+                    <div class="group-title">Tokens</div>
+                    <div id="available-balance-line" class="label-value">
+                        <label>USDNEAR balance</label>
+                        <div class="balance">{usdnear}</div>
+                    </div>
+                    <div class="group-title">Line of Credit</div>
+                    <div id="available-balance-line" class="label-value">
+                        <label>USDNEAR limit</label>
+                        <div class="balance">{usdnear_credit_limit}</div>
+                    </div>
+                    <div class="group-title">Collateral</div>
+                    <div class="label-value">
+                        <label>Total stNEARs</label>
+                        <div class="balance">{stnear}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Locked stNEAR</label>
+                        <div class="balance">{locked_stnear}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Free stNEAR</label>
+                        <div class="balance">{free_stnear}</div>
+                    </div>
+                    <div class="group-title">Outstanding Loans</div>
+                    <div class="label-value">
+                        <label>Owed USDNEAR</label>
+                        <div class="balance">{outstanding_loans_usdnear}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Collateralization Ratio</label>
+                        <div class="pct">{collateralization_ratio}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Loan Status</label>
+                        <div class="">{loan_status}</div>
+                    </div>
+                </div>
+
+
+                <div id="my-account-supages" class="footer">
+
+                    <!-- Buttons -->
+                    <div id="account-selected-buttons" class="subpage hidden">
+                        <div class="group-title">USDNEAR</div>
+                        <div class="button-group">
+                            <button id="send-usdnear">Send USDNEAR</button>
+                            <button id="refresh-account">Refresh Balance</button>
+                        </div>
+                        <div class="group-title">Collateral</div>
+                        <div class="button-group">
+                            <button id="deposit">Deposit stNEAR</button>
+                            <button id="withdraw">Withdraw stNEAR</button>
+                        </div>
+                        <div class="group-title">USDNEAR Loan</div>
+                        <div class="button-group">
+                            <button id="take-loan">Take USDNEAR Loan</button>
+                            <button id="repay-loan">Repay Loan</button>
+                        </div>
+                    </div>
+
+
+                    <!-- SUBPAGES -->
+
+                    <!-- subpage SEND USDNEAR -->
+                    <div id="send-usdnear" class="subpage hidden">
+                        <h1>Send USDNEAR</h1>
+                        <div>
+                            <div class="form-field-label">
+                                <label for="receiver-account">
+                                    Receiver Account
+                                </label>
+                                <div class="form-control">
+                                    <input id="receiver-account" type="text">
+                                </div>
+                            </div>
+                            <div class="form-field-label">
+                                <label for="send-usdnear-amount">
+                                USDNEAR amount to SEND (Max <span id="send-usdnear-max"></span>)
+                                </label>
+                                <div class="form-control">
+                                    <input id="send-usdnear-amount" type="number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deposit stNEAR -->
+                    <div id="deposit-subpage" class="subpage hidden">
+                        <h1>Deposit Collateral stNEAR</h1>
+                        <div class="subtitle">
+                            <h3 class="success">You need to deposit stNEAR in this smart contract to be able 
+                                to get USDNEAR. Your stNEAR will serve as collateral and can be liquidated. 
+                                You keep earning your staking rewards minus loan interest on outstanding USDNEAR loans.
+                            </h3>
+                        </div>
+                        <div class="deposit-form">
+                            <div class="form-field-label">
+                                <label for="deposit-amount">
+                                    Amount in stNEAR to deposit
+                                </label>
+                                <div class="form-control">
+                                    <input id="deposit-amount" type="number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WITHDRAW stNEAR -->
+                    <div id="withdraw-subpage" class="subpage hidden">
+                        <h1>Withdraw NEAR</h1>
+                        <div class="subtitle">
+                            <h3 class="success">You can withdraw excess collateral, but it is preferable to keep loans overcollateralized to avoid liquidations.
+                                You keep earning staking rewards on your stNEAR in this contract. 
+                                </h3>
+                        </div>
+                        <div class="withdraw-form">
+                            <div class="form-field-label">
+                                <label for="withdraw-amount">
+                                    Amount in stNEAR to withdraw (Max <span id="max-withdraw"></span>)
+                                </label>
+                                <div class="form-control">
+                                    <input id="withdraw-amount" type="number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- subpage Take Loan -->
+                    <div id="take-loan" class="subpage hidden">
+                        <h1>Take USDNEAR Loan</h1>
+                        <div>
+                            <div class="form-field-label">
+                                <label for="loan-amount">
+                                    Amount in USDNEAR (Max <span id="credit-limit-usdnear"></span>)
+                                </label>
+                                <div class="form-control">
+                                    <input id="loan-amount" type="number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- subpage repay loan -->
+                    <div id="repay-loan" class="subpage hidden">
+                        <h1>Repay USDNEAR Loan</h1>
+                        <div>
+                            <div class="form-field-label">
+                                <label for="repay-amount">
+                                    USDNEAR Amount to repay (Max <span id="max-amount-repay"></span>)
+                                </label>
+                                <div class="form-control">
+                                    <input id="repay-amount" type="number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="ok-cancel-placeholder" class="footer"></div>
+
+            </div>
+
+            <!-- OK CANCEL buttons component -->
+            <div id="ok-cancel" class="component">
+                <div class="button-group ok-cancel hidden no-top-line">
+                    <button id="ok" class="button btn-primary">
+                        OK
+                    </button>
+                    <button id="cancel" class="button btn-cancel">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+
+        </div> <!-- end app-contents -->
+    </div> <!-- end app-->
+
+
+    <!-- -->
+    <div id="err-div"></div>
+    <!-- -->
+    <div id="wait">
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <script type="module" src="dist/index.js"></script>
+
+</body>
+
+</html>

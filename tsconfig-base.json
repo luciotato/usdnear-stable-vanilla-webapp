@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 12+es2020",
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es2020",
+      "es2020.promise",
+      "es2020.bigint",
+      "es2020.string"
+    ],
+    "module": "es2020",
+    "target": "es2020",
+    "outDir": "DApp/dist",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": false,
+    "experimentalDecorators": true
+  },
+  "include":["src"]
+}
