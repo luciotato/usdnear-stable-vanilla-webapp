@@ -135,7 +135,7 @@
                     </div>
                     <div class="label-value">
                         <label>Loan Status</label>
-                        <div class="">{loan_status}</div>
+                        <div class="{loan_status_class}">{loan_status}</div>
                     </div>
                 </div>
 
@@ -166,14 +166,14 @@
 
                     <!-- subpage SEND USDNEAR -->
                     <div id="send-usdnear" class="subpage hidden">
-                        <h1>Send USDNEAR</h1>
+                        <h2>Send USDNEAR</h2>
                         <div>
                             <div class="form-field-label">
-                                <label for="receiver-account">
+                                <label for="send-receiver-account">
                                     Receiver Account
                                 </label>
                                 <div class="form-control">
-                                    <input id="receiver-account" type="text">
+                                    <input id="send-receiver-account" type="text">
                                 </div>
                             </div>
                             <div class="form-field-label">
@@ -187,9 +187,18 @@
                         </div>
                     </div>
 
+                    <!-- subpage SEND USDNEAR confirmation -->
+                    <div id="send-confirmation" class="subpage hidden">
+                        <h2>Confirm Send USDNEAR</h2>
+                        <h3 class="warning">
+                            Confirm send  USDNEAR <span id="confirm-send-usdnear-amount"></span> to 
+                            <span id="confirm-receiver-account"></span> ?
+                        </h3>
+                    </div>
+                    
                     <!-- Deposit stNEAR -->
                     <div id="deposit-subpage" class="subpage hidden">
-                        <h1>Deposit Collateral stNEAR</h1>
+                        <h2>Deposit Collateral stNEAR</h2>
                         <div class="subtitle">
                             <h3 class="success">You need to deposit stNEAR in this smart contract to be able 
                                 to get USDNEAR. Your stNEAR will serve as collateral and can be liquidated. 
@@ -210,7 +219,7 @@
 
                     <!-- WITHDRAW stNEAR -->
                     <div id="withdraw-subpage" class="subpage hidden">
-                        <h1>Withdraw NEAR</h1>
+                        <h2>Withdraw NEAR</h2>
                         <div class="subtitle">
                             <h3 class="success">You can withdraw excess collateral, but it is preferable to keep loans overcollateralized to avoid liquidations.
                                 You keep earning staking rewards on your stNEAR in this contract. 
@@ -230,14 +239,14 @@
 
                     <!-- subpage Take Loan -->
                     <div id="take-loan" class="subpage hidden">
-                        <h1>Take USDNEAR Loan</h1>
+                        <h2>Take USDNEAR Loan</h2>
                         <div>
                             <div class="form-field-label">
-                                <label for="loan-amount">
+                                <label for="take-loan-amount">
                                     Amount in USDNEAR (Max <span id="credit-limit-usdnear"></span>)
                                 </label>
                                 <div class="form-control">
-                                    <input id="loan-amount" type="number">
+                                    <input id="take-loan-amount" type="number">
                                 </div>
                             </div>
                         </div>
@@ -245,11 +254,11 @@
 
                     <!-- subpage repay loan -->
                     <div id="repay-loan" class="subpage hidden">
-                        <h1>Repay USDNEAR Loan</h1>
+                        <h2>Repay USDNEAR Loan</h2>
                         <div>
                             <div class="form-field-label">
                                 <label for="repay-amount">
-                                    USDNEAR Amount to repay (Max <span id="max-amount-repay"></span>)
+                                    USDNEAR Amount to repay (Max <span id="repay-usdnear-max"></span>)
                                 </label>
                                 <div class="form-control">
                                     <input id="repay-amount" type="number">

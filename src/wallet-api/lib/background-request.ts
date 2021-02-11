@@ -59,6 +59,7 @@ function msgReceivedFromContentScript(msg:Record<string,any>){
                 data: msg.data,
                 }
             })
+    if (eventKey="wallet-connected") wallet.version=msg.version||100000001;
     console.log("document.dispatchEvent "+ eventInfo.type) 
     document.dispatchEvent(eventInfo);
 }

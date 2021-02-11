@@ -4,7 +4,7 @@ import * as d from "../util/document.js"
 import * as okCancel from "../components/ok-cancel-singleton.js"
 
 import { wallet } from "../wallet-api/wallet.js"
-import { usdnearStable } from "../contracts/usdnearStable.js"
+import { UsdnearStable, usdnearStable } from "../contracts/usdnearStable.js"
 
 import { ExtendedAccountData } from "../data/extended-account.js"
 
@@ -30,7 +30,7 @@ function init() {
     d.onClickId("withdraw", withdrawClicked);
 
     d.onClickId("take-loan", takeLoanClicked);
-    d.onClickId("repay", repayClicked);
+    d.onClickId("repay-loan", repayClicked);
 
     showButtons()
 
@@ -187,18 +187,7 @@ function repayClicked(){
         const acc = cachedAccountData
         d.byId("repay-usdnear-max").innerText = c.toStringDec(acc.outstanding_loans_usdnear)
 
-        ifWalletConnectedShowSubPage("repay-stnear", repayOKClicked)
-
-    } catch (ex) {
-        d.showErr(ex.message)
-    }
-}
-async function repayOKClicked() {
-    try {
-        const info = cachedAccountData
-        const usdnearToRepay = d.getNumber("input#repay-amount")
-
-        ifWalletConnectedShowSubPage("repay-confirmation", performRepay)
+        ifWalletConnectedShowSubPage("repay-loan", performRepay)
 
     } catch (ex) {
         d.showErr(ex.message)
@@ -236,7 +225,7 @@ function sendUsdnearClicked(){
         const acc = cachedAccountData
         d.byId("send-usdnear-max").innerText = c.toStringDec(acc.usdnear)
 
-        ifWalletConnectedShowSubPage("send-usnear", sendUsdnearOKClicked)
+        ifWalletConnectedShowSubPage("send-usdnear", sendUsdnearOKClicked)
 
     } catch (ex) {
         d.showErr(ex.message)
@@ -245,6 +234,10 @@ function sendUsdnearClicked(){
 }
 async function sendUsdnearOKClicked() {
     try {
+        const usdnearTosend = d.getNumber("input#send-usdnear-amount")
+        const receiverId = d.inputById("send-receiver-account").value.trim()
+        d.qs("#confirm-send-usdnear-amount").innerText = c.toStringDec(usdnearTosend);
+        d.qs("#confirm-receiver-account").innerText = receiverId;
         ifWalletConnectedShowSubPage("send-confirmation", performSend)
     } catch (ex) {
         d.showErr(ex.message)
@@ -255,15 +248,16 @@ async function performSend() {
     d.showWait()
     try {
 
-        const info = cachedAccountData
-        const usdnearTosend = d.getNumber("input#send-amount")
+        const usdnearTosend = d.getNumber("input#send-usdnear-amount")
         const receiverId = d.inputById("send-receiver-account").value.trim()
         if (!receiverId) throw Error("invalid receiver account")
 
         //check if the receiver account exists
-        let balance = await wallet.getAccountBalance(receiverId)
+        if (wallet.version >= 100000004) {
+            let balance = await wallet.getAccountBalance(receiverId)
+        }
 
-        await metaPool.ft_transfer( receiverId, usdnearTosend)
+        await usdnearStable.ft_transfer( receiverId, usdnearTosend)
 
         //refresh acc info
         await refreshAccount()

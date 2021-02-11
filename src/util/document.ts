@@ -374,8 +374,7 @@ export class El {
       this.el = elem as unknown as AnyElement;
     }
     catch (ex) {
-      console.error("ERR: querySelectorAll('" + selector + "') " + ex.message);
-      return;
+      throw new Error("ERR: querySelectorAll('" + selector + "') " + ex.message);
     }
   }
 

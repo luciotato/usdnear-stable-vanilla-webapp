@@ -24,7 +24,7 @@ export class Nep141 extends SmartContract {
         return this.call("ft_transfer", {
                 receiver_id:receiver_id, 
                 amount:ntoy(amount),
-                memo:memo
+                memo:memo||null
             })
     }
 

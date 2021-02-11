@@ -21,6 +21,7 @@ export class ExtendedAccountData {
   stbl: number;
 
   loan_status = "OK";
+  loan_status_class = "success";
 
   constructor(accountInfo: GetAccountInfoResult) {
     this.accountInfo = accountInfo;
@@ -39,12 +40,15 @@ export class ExtendedAccountData {
 
     if (this.collateralization_ratio<150){
       this.loan_status="OPEN FOR LIQUIDATION"
+      this.loan_status_class = "critical"
     }
     else if (this.collateralization_ratio<200){
       this.loan_status="WARNING: LOW COLLATERAL"
+      this.loan_status_class = "warning"
     }
     else {
       this.loan_status="OK"
+      this.loan_status_class = "success"
     }
   }
 

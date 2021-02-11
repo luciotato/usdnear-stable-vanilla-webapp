@@ -12,6 +12,8 @@ export class Wallet {
     _accountId: string="";
     _network="mainnet"; //default required network. Users will be required to connect accounts from mainnet
     
+    version: number = 100000001;
+
     get accountId():string{
         return this._accountId;
     }
