@@ -24,13 +24,15 @@ function init() {
     backLink.onClick(Dashboard_show);
 
     d.onClickId("send-usdnear", sendUsdnearClicked);
-    d.onClickId("refresh-account", refreshAccountClicked);
+    d.onClickId("convert-usdnear", convertUsdnearClicked);
 
     d.onClickId("deposit", depositClicked);
     d.onClickId("withdraw", withdrawClicked);
 
     d.onClickId("take-loan", takeLoanClicked);
     d.onClickId("repay-loan", repayClicked);
+
+    d.onClickId("refresh-account", refreshAccountClicked);
 
     showButtons()
 
@@ -122,12 +124,18 @@ function ifWalletConnectedShowSubPage(subPageId: string, onOKHandler: ClickHandl
 
 }
 
+//----------------------
+async function convertUsdnearClicked() {
+    await forceRefreshAccountData()
+    ifWalletConnectedShowSubPage('convert-usdnear', performConvertUsdnear)
+    d.byId("convert-usdnear-max").innerText = c.toStringDec(cachedAccountData.usdnear)
+}
 
 //----------------------
 async function withdrawClicked() {
     await forceRefreshAccountData()
     ifWalletConnectedShowSubPage('withdraw-subpage', performWithdraw)
-    d.byId("max-withdraw").innerText = c.toStringDec(cachedAccountData.stnear - cachedAccountData.locked_stnear)
+    d.byId("max-withdraw").innerText = c.toStringDec(cachedAccountData.stnear)
 }
 
 
@@ -307,6 +315,38 @@ async function performDeposit() {
 
 }
 
+async function performConvertUsdnear() {
+    try {
+
+        okCancel.disable()
+        d.showWait()
+
+        const amount = d.getNumber("#convert-usdnear-amount")
+
+        const max = cachedAccountData.usdnear;
+
+        if (!isValidAmount(amount)) throw Error("Amount should be positive");
+        if (amount > max) throw Error("max amount is " + c.toStringDec(max));
+
+        await usdnearStable.convert_usdnear(amount)
+
+        showButtons()
+
+        d.showSuccess("Success: " + wallet.accountId + " withdrew " + c.toStringDec(amount) + " stNEAR from collateral")
+
+        await refreshAccount()
+
+    }
+    catch (ex) {
+        d.showErr(ex.message)
+    }
+    finally {
+        d.hideWait()
+        okCancel.enable()
+    }
+
+}
+
 async function performWithdraw() {
     try {
 
@@ -315,7 +355,7 @@ async function performWithdraw() {
 
         const amount = d.getNumber("#withdraw-amount")
 
-        const max = cachedAccountData.stnear-cachedAccountData.locked_stnear;
+        const max = cachedAccountData.stnear;
 
         if (!isValidAmount(amount)) throw Error("Amount should be positive");
         if (amount > max) throw Error("max amount is " + c.toStringDec(max));

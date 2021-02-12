@@ -37,7 +37,7 @@
 
             <!-- Dashboard -->
             <div id="dashboard-page" class="page slide-hide hidden">
-                <h2 class="page-header">Dashboard</h2>
+                <h2 class="page-header">USDNEAR Stablecoin Dashboard</h2>
 
                 <div id="dashboard">
                 </div>
@@ -58,27 +58,27 @@
                         <div>{location}</div>
                     </div>
                     <div class="label-value">
-                        <label>Total USDNEAR</label>
+                        <label>Circulating USDNEAR</label>
                         <div class="balance">{total_usdnear}</div>
-                    </div>
-                    <div class="label-value">
-                        <label>Total Collateral stNEAR</label>
-                        <div class="balance">{total_collateral_stnear}</div>
-                    </div>
-                    <div class="label-value">
-                        <label>stNEAR price</label>
-                        <div class="balance">{current_stnear_price}</div>
                     </div>
                     <div class="label-value">
                         <label>Valued Collateral</label>
                         <div class="balance">{valued_collateral}</div>
                     </div>
                     <div class="label-value">
-                        <label>Total USDNEAR accounts</label>
+                        <label>stNEAR price</label>
+                        <div class="balance">{current_stnear_price}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>Locked Collateral stNEAR</label>
+                        <div class="balance">{total_collateral_stnear}</div>
+                    </div>
+                    <div class="label-value">
+                        <label>USDNEAR accounts</label>
                         <div class="number">{balances_count}</div>
                     </div>
                     <div class="label-value">
-                        <label>Total borrowing accounts</label>
+                        <label>Borrowing accounts</label>
                         <div class="number">{b_accounts_count}</div>
                     </div>
                     <div class="label-value">
@@ -107,7 +107,7 @@
                         <div class="balance">{usdnear}</div>
                     </div>
                     <div id="available-balance-line" class="label-value">
-                        <label>stNEAR balance</label>
+                        <label>Free stNEAR balance</label>
                         <div class="balance">{stnear}</div>
                     </div>
                     <div class="group-title">Line of Credit</div>
@@ -117,7 +117,7 @@
                     </div>
                     <div class="group-title">Outstanding Loans</div>
                     <div class="label-value">
-                        <label>Collateral stNEAR</label>
+                        <label>Locked Collateral stNEAR</label>
                         <div class="balance">{locked_stnear}</div>
                     </div>
                     
@@ -151,20 +151,16 @@
                         <div class="group-title">USDNEAR</div>
                         <div class="button-group">
                             <button id="send-usdnear">Send USDNEAR</button>
-                            <button id="convert">Convert</button>
+                            <button id="convert-usdnear">Convert</button>
                         </div>
                         <div class="button-group no-top-line">
                             <button id="take-loan">Take USDNEAR Loan</button>
                             <button id="repay-loan">Repay Loan</button>
                         </div>
-                        <div class="group-title">stNEAR</div>
+                        <div class="group-title">stNEAR Collateral</div>
                         <div class="button-group">
                             <button id="deposit">Deposit stNEAR</button>
                             <button id="withdraw">Withdraw stNEAR</button>
-                        </div>
-                        <div class="button-group no-top-line">
-                            <button id="add-collateral">Add Collateral</button>
-                            <button id="remove-collateral">Remove Collateral</button>
                         </div>
                         <div class="button-group">
                             <button id="refresh-account">Refresh Account</button>
@@ -207,7 +203,7 @@
                     </div>
                     
                     <!-- subpage Convert  -->
-                    <div id="convert" class="subpage hidden">
+                    <div id="convert-usdnear" class="subpage hidden">
                         <h2>Convert USDNEAR</h2>
                         <div>
                             <div class="form-field-label">
@@ -222,7 +218,7 @@
                     </div>
 
                     <!-- subpage CONVERT USDNEAR confirmation -->
-                    <div id="send-confirmation" class="subpage hidden">
+                    <div id="convert-usdnear-confirmation" class="subpage hidden">
                         <h2>Confirm Convert USDNEAR</h2>
                         <h3 class="warning">
                             Confirm Convert USDNEAR <span id="confirm-convert-usdnear-amount"></span> 

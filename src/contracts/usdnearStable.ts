@@ -58,6 +58,10 @@ export class UsdnearStable extends Nep141 {
         return this.view("get_account_info",{account_id:accountId }) 
     }
     
+    convert_usdnear(amount:number) : Promise<void> {
+        return this.call("convert_usdnear", {usdnear_to_convert:ntoy(amount)})
+    }
+
     withdraw_stnear(amount:number) : Promise<void> {
         return this.call("withdraw_stnear", {amount:ntoy(amount)})
     }
