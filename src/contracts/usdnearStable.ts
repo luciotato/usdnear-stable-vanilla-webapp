@@ -20,6 +20,7 @@ export type GetAccountInfoResult = {
 
     usdnear_credit_limit: string; //U128,
     locked_stnear: string; //U128,
+    valued_collateral_usd: string; //U128,
     outstanding_loans_usdnear: string; //U128,
     collateralization_ratio: number; //u32 basis point,
 

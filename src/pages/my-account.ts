@@ -292,7 +292,7 @@ async function performDeposit() {
 
         showButtons()
 
-        d.showSuccess("stNEAR " + c.toStringDec(stNearToDeposit) + " added to collateral")
+        d.showSuccess("stNEAR " + c.toStringDec(stNearToDeposit) + " deposited")
 
         await refreshAccount()
 

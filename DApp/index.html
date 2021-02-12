@@ -106,25 +106,29 @@
                         <label>USDNEAR balance</label>
                         <div class="balance">{usdnear}</div>
                     </div>
+                    <div id="available-balance-line" class="label-value">
+                        <label>stNEAR balance</label>
+                        <div class="balance">{stnear}</div>
+                    </div>
                     <div class="group-title">Line of Credit</div>
                     <div id="available-balance-line" class="label-value">
                         <label>USDNEAR limit</label>
                         <div class="balance">{usdnear_credit_limit}</div>
                     </div>
-                    <div class="group-title">Collateral</div>
+                    <div class="group-title">Outstanding Loans</div>
                     <div class="label-value">
-                        <label>Total stNEARs</label>
-                        <div class="balance">{stnear}</div>
-                    </div>
-                    <div class="label-value">
-                        <label>Locked stNEAR</label>
+                        <label>Collateral stNEAR</label>
                         <div class="balance">{locked_stnear}</div>
                     </div>
+                    
                     <div class="label-value">
-                        <label>Free stNEAR</label>
-                        <div class="balance">{free_stnear}</div>
+                        <label>stNEAR price USD</label>
+                        <div class="balance">{stnear_price_usd}</div>
                     </div>
-                    <div class="group-title">Outstanding Loans</div>
+                    <div class="label-value">
+                        <label>Collateral Value USD</label>
+                        <div class="balance">{valued_collateral_usd}</div>
+                    </div>
                     <div class="label-value">
                         <label>Owed USDNEAR</label>
                         <div class="balance">{outstanding_loans_usdnear}</div>
@@ -147,17 +151,23 @@
                         <div class="group-title">USDNEAR</div>
                         <div class="button-group">
                             <button id="send-usdnear">Send USDNEAR</button>
-                            <button id="refresh-account">Refresh Balance</button>
+                            <button id="convert">Convert</button>
                         </div>
-                        <div class="group-title">Collateral</div>
+                        <div class="button-group no-top-line">
+                            <button id="take-loan">Take USDNEAR Loan</button>
+                            <button id="repay-loan">Repay Loan</button>
+                        </div>
+                        <div class="group-title">stNEAR</div>
                         <div class="button-group">
                             <button id="deposit">Deposit stNEAR</button>
                             <button id="withdraw">Withdraw stNEAR</button>
                         </div>
-                        <div class="group-title">USDNEAR Loan</div>
+                        <div class="button-group no-top-line">
+                            <button id="add-collateral">Add Collateral</button>
+                            <button id="remove-collateral">Remove Collateral</button>
+                        </div>
                         <div class="button-group">
-                            <button id="take-loan">Take USDNEAR Loan</button>
-                            <button id="repay-loan">Repay Loan</button>
+                            <button id="refresh-account">Refresh Account</button>
                         </div>
                     </div>
 
@@ -191,18 +201,42 @@
                     <div id="send-confirmation" class="subpage hidden">
                         <h2>Confirm Send USDNEAR</h2>
                         <h3 class="warning">
-                            Confirm send  USDNEAR <span id="confirm-send-usdnear-amount"></span> to 
+                            Confirm send USDNEAR <span id="confirm-send-usdnear-amount"></span> to 
                             <span id="confirm-receiver-account"></span> ?
                         </h3>
                     </div>
                     
+                    <!-- subpage Convert  -->
+                    <div id="convert" class="subpage hidden">
+                        <h2>Convert USDNEAR</h2>
+                        <div>
+                            <div class="form-field-label">
+                                <label for="convert-usdnear-amount">
+                                USDNEAR amount to convert to stNEAR (Max <span id="convert-usdnear-max"></span>)
+                                </label>
+                                <div class="form-control">
+                                    <input id="convert-usdnear-amount" type="number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- subpage CONVERT USDNEAR confirmation -->
+                    <div id="send-confirmation" class="subpage hidden">
+                        <h2>Confirm Convert USDNEAR</h2>
+                        <h3 class="warning">
+                            Confirm Convert USDNEAR <span id="confirm-convert-usdnear-amount"></span> 
+                            into stNEAR <span id="confirm-convert-stnear-amount"></span> ?
+                        </h3>
+                    </div>
+
                     <!-- Deposit stNEAR -->
                     <div id="deposit-subpage" class="subpage hidden">
-                        <h2>Deposit Collateral stNEAR</h2>
+                        <h2>Deposit stNEAR</h2>
                         <div class="subtitle">
                             <h3 class="success">You need to deposit stNEAR in this smart contract to be able 
-                                to get USDNEAR. Your stNEAR will serve as collateral and can be liquidated. 
-                                You keep earning your staking rewards minus loan interest on outstanding USDNEAR loans.
+                                to mint USDNEAR. Your stNEAR will serve as collateral and can be liquidated. 
+                                You keep earning your staking rewards minus loan interest.
                             </h3>
                         </div>
                         <div class="deposit-form">
@@ -219,10 +253,10 @@
 
                     <!-- WITHDRAW stNEAR -->
                     <div id="withdraw-subpage" class="subpage hidden">
-                        <h2>Withdraw NEAR</h2>
+                        <h2>Withdraw stNEAR</h2>
                         <div class="subtitle">
-                            <h3 class="success">You can withdraw excess collateral, but it is preferable to keep loans overcollateralized to avoid liquidations.
-                                You keep earning staking rewards on your stNEAR in this contract. 
+                            <h3 class="success">You can withdraw stNEAR but it is preferable to keep loans overcollateralized to avoid liquidations.
+                                You keep earning staking rewards for all your stNEAR in this contract. 
                                 </h3>
                         </div>
                         <div class="withdraw-form">
@@ -262,6 +296,47 @@
                                 </label>
                                 <div class="form-control">
                                     <input id="repay-amount" type="number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Collateral stNEAR -->
+                    <div id="deposit-subpage" class="subpage hidden">
+                        <h2>Add Collateral stNEAR</h2>
+                        <div class="subtitle">
+                            <h3 class="success">You add collateral to your outstanding loan. It is preferable to 
+                                keep loans overcollateralized to avoid liquidations.
+                                You keep earning staking rewards for all your stNEAR in this contract. 
+                            </h3>
+                        </div>
+                        <div class="deposit-form">
+                            <div class="form-field-label">
+                                <label for="add-collateral-amount">
+                                    stNEAR to add as collateral
+                                </label>
+                                <div class="form-control">
+                                    <input id="add-collateral-amount" type="number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Remove collateral stNEAR -->
+                    <div id="withdraw-subpage" class="subpage hidden">
+                        <h2>Remove Collateral stNEAR</h2>
+                        <div class="subtitle">
+                            <h3 class="success">You can remove excess collateral, but it is preferable to keep loans overcollateralized to avoid liquidations.
+                                You keep earning staking rewards for all your stNEAR in this contract. 
+                                </h3>
+                        </div>
+                        <div class="withdraw-form">
+                            <div class="form-field-label">
+                                <label for="remove-collateral-amount">
+                                    stNEAR to remove from collateral (Max <span id="max-remove-collateral"></span>)
+                                </label>
+                                <div class="form-control">
+                                    <input id="remove-collateral-amount" type="number">
                                 </div>
                             </div>
                         </div>
